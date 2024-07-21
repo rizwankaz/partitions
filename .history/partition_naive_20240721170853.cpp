@@ -2,7 +2,7 @@
 #include <vector>
 #include <chrono>
 #include <fstream>
-#include <cstdint>
+#include <cinttypes>
 
 uintmax_t partition(uintmax_t n) {
     std::vector<uintmax_t> dp(n + 1, 0);
@@ -21,7 +21,7 @@ uintmax_t partition(uintmax_t n) {
 }
 
 int main() {
-    std::ofstream outfile("naive_runtime_data.txt");
+    std::ofstream outfile("runtime_data.txt");
 
     outfile << "n\tpartition(n)\truntime\n";
 

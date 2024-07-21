@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 n_values = []
 runtime_values = []
 
-with open("runtime_data.txt", "r") as file:
+with open("naive_runtime_data.txt", "r") as file:
     next(file)
     for line in file:
         parts = line.strip().split('\t')
