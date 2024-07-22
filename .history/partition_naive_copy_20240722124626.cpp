@@ -2,14 +2,14 @@
 #include <vector>
 #include <chrono>
 #include <fstream>
-#include <cstdint>
+#include "BigInt.hpp"
 
-uintmax_t partition(uintmax_t n) {
-    std::vector<uintmax_t> dp(n + 1, 0);
+BigInt partition(BigInt n) {
+    std::vector<BigInt> dp(n + 1, 0);
     dp[0] = 1;
 
-    for (int i = 1; i <= n; ++i) {
-        for (int j = i; j <= n; ++j) {
+    for (BigInt i = 1; i <= n; ++i) {
+        for (BigInt j = i; j <= n; ++j) {
             dp[j] += dp[j - i];
         }
     }
@@ -26,7 +26,7 @@ int main() {
     while (true) {
         auto start = std::chrono::high_resolution_clock::now();
 
-        uintmax_t result = partition(n);
+        BigInt result = partition(n);
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;

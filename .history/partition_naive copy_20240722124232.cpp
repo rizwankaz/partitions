@@ -10,6 +10,9 @@ uintmax_t partition(uintmax_t n) {
 
     for (int i = 1; i <= n; ++i) {
         for (int j = i; j <= n; ++j) {
+            if (dp[j] > UINTMAX_MAX - dp[j - i]) {
+                return UINTMAX_MAX;
+            }
             dp[j] += dp[j - i];
         }
     }
@@ -27,6 +30,10 @@ int main() {
         auto start = std::chrono::high_resolution_clock::now();
 
         uintmax_t result = partition(n);
+
+        if (result == UINTMAX_MAX) {
+            break;
+        }
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;

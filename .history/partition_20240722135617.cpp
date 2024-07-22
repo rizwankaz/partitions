@@ -2,14 +2,15 @@
 #include <vector>
 #include <chrono>
 #include <fstream>
-#include <cstdint>
+#include <gmpxx.h>
 
-uintmax_t partition(uintmax_t n) {
-    std::vector<uintmax_t> dp(n + 1, 0);
+mpz_class partition(unsigned int n) {
+    std::vector<mpz_class> dp(n + 1);
+
     dp[0] = 1;
 
-    for (int i = 1; i <= n; ++i) {
-        for (int j = i; j <= n; ++j) {
+    for (unsigned int i = 1; i <= n; ++i) {
+        for (unsigned int j = i; j <= n; ++j) {
             dp[j] += dp[j - i];
         }
     }
@@ -20,20 +21,27 @@ uintmax_t partition(uintmax_t n) {
 int main() {
     std::ofstream outfile("naive_runtime_data.txt");
 
+    if (!outfile) {
+        std::cerr << "Error creating file!" << std::endl;
+        return 1;
+    }
+
     outfile << "n\tpartition(n)\truntime\n";
+    std::cout << "File created successfully!" << std::endl;
 
     int n = 1;
     while (true) {
         auto start = std::chrono::high_resolution_clock::now();
 
-        uintmax_t result = partition(n);
+        mpz_class result = partition(n);
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;
 
         outfile << n << "\t" << result << "\t" << duration.count() << "\n";
+        std::cout << "n: " << n << " result: " << result << " runtime: " << duration.count() << "s" << std::endl;
 
-        if (n ==400) {
+        if (n == 400) {
             break;
         }
 

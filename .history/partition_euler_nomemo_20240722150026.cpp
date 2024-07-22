@@ -3,17 +3,10 @@
 #include <fstream>
 #include <cstdint>
 #include <limits>
-#include <unordered_map>
-
-std::unordered_map<int, uintmax_t> memo;
 
 uintmax_t partition(int n) {
     if (n < 0) return 0;
     if (n == 0) return 1;
-    
-    if (memo.find(n) != memo.end()) {
-        return memo[n];
-    }
 
     uintmax_t result = 0;
     for (int k = 1; ; ++k) {
@@ -44,12 +37,11 @@ uintmax_t partition(int n) {
         }
     }
 
-    memo[n] = result;
     return result;
 }
 
 int main() {
-    std::ofstream outfile("euler_runtime_data.txt");
+    std::ofstream outfile("euler_nomemo_runtime_data.txt");
 
     outfile << "n\tpartition(n)\truntime\n";
 
@@ -58,13 +50,13 @@ int main() {
         auto start = std::chrono::high_resolution_clock::now();
 
         uintmax_t result = partition(n);
-        
+
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = end - start;
 
         outfile << n << "\t" << result << "\t" << duration.count() << "\n";
 
-        if (n ==400) {
+        if (n == 400) {
             break;
         }
 
