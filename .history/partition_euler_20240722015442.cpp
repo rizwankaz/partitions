@@ -79,7 +79,7 @@ int main() {
 
         outfile << n << "\t" << result << "\t" << duration.count() << "\n";
 
-        if (n ==400) {
+        if (n == 416) {
             break;
         }
 
